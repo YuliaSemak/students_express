@@ -3,9 +3,9 @@ var router = express.Router();
 const db = require('../db/connector');
 
 router.get('/', async function(req, res, next) {
-  const students = await db.query('SELECT * FROM students');
+  const sloniki = await db.query('SELECT * FROM sloniki ORDER BY id');
 
-  res.render('index', { students: students.rows || [] });
+  res.render('index', { sloniki: sloniki.rows || [] });
 });
 
 module.exports = router;

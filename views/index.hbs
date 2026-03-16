@@ -1,26 +1,19 @@
-<!--view table of students-->
+<!--view table of sloniki-->
 <table>
     <thead>
     <tr>
         <th scope="col">ID</th>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
-        <th scope="col">Group</th>
-        <th scope="col">Life Problems</th>
-        <th scope="col">Info</th>
-        <th scope="col">Hobby</th>
+        <th scope="col">USERNAME</th>
+        <th scope="col">CREATED AT</th>
+        
     </tr>
     </thead>
     <tbody>
-    {{#each students}}
+    {{#each sloniki}}
         <tr>
-            <th scope="row">{{this.id}}</th>
-            <td>{{this.first_name}}</td>
-            <td>{{this.last_name}}</td>
-            <td>{{this.group_name}}</td>
-            <td>{{this.life_problems}}</td>
-            <td>{{this.additional_info}}</td>
-            <td>{{this.hobby}}</td>
+            <th scope="row">{{@index}}</th>
+            <td>{{this.username}}</td>
+            <td>{{this.created_at}}</td>
         </tr>
     {{/each}}
     </tbody>
