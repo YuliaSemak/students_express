@@ -1,0 +1,19 @@
+<!--view table of students-->
+<table>
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">email</th>
+        <th scope="col">created_at</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each weapons}}
+        <tr>
+            <th scope="row">{{this.id}}</th>
+            <td>{{this.email}}</td>
+            <td>{{this.created_at}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
