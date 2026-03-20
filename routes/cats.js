@@ -33,6 +33,7 @@ router.post("/add", async (req, res) => {
       breed,
       age,
       weight,
+      favorite_food,   
       microchip,
       owner_contact,
       character_notes,
@@ -41,8 +42,8 @@ router.post("/add", async (req, res) => {
     const hasMicrochip = microchip === "Yes";
 
     const query = `
-    INSERT INTO cats (name, breed, age_years, weight_kg, has_microchip, owner_contact, character_notes)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    INSERT INTO cats (name, breed, age_years, weight_kg, favorite_food,  has_microchip, owner_contact, character_notes)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `;
 
     await db.query(query, [
@@ -50,6 +51,7 @@ router.post("/add", async (req, res) => {
       breed || "Unknown",
       age ? parseInt(age) : 0,
       weight ? parseFloat(weight) : null,
+      favorite_food,
       hasMicrochip,
       owner_contact,
       character_notes,
@@ -99,18 +101,18 @@ router.post("/update/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      cat_name, breed, age, weight, microchip, owner_contact, character_notes
+      cat_name, breed, age, weight, favorite_food, microchip, owner_contact, character_notes
     } = req.body;
     const hasMicrochip = microchip === 'Yes';
     const query = `
     UPDATE cats
-    SET name = $1, breed = $2, age_years = $3, weight_kg = $4, 
-    has_microchip = $5, owner_contact = $6, character_notes =$7
-    WHERE id = $8
+    SET name = $1, breed = $2, age_years = $3, weight_kg = $4,  favorite_food = $5,
+    has_microchip = $6, owner_contact = $7, character_notes =$8
+    WHERE id = $9
     `;
 
     await db.query(query, [
-      cat_name, breed, parseInt(age), parseFloat(weight),
+      cat_name, breed, parseInt(age), parseFloat(weight), favorite_food,
       hasMicrochip, owner_contact, character_notes, id
     ]);
     res.redirect("/cats");
