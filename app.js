@@ -11,6 +11,7 @@ import gamesRouter from './routes/games.js'
 import weaponRouter from './routes/dead_space.js'
 import carsRouter from './routes/cars.js'
 import slonikiRouter from './routes/sloniki.js'
+import gymRouter from './routes/gym.js'
 import heroesRouter from './routes/heroes_mlbb.js' 
 import catsRouter from './routes/cats.js' 
 import dhdRouter from './routes/dhd.js'
@@ -39,6 +40,7 @@ app.use('/games', gamesRouter);
 app.use('/weapons', weaponRouter);
 app.use('/sloniki', slonikiRouter);
 app.use('/cars', carsRouter);
+app.use('/gym', gymRouter);
 app.use('/heroes', heroesRouter); 
 app.use('/cats', catsRouter); 
 app.use('/dhd', dhdRouter);
