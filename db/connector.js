@@ -7,6 +7,7 @@ const pool = new Pool({
     connectionString: process.env.DB_URL,
 });
 
+const createTableQueries = [];
 createTableQueries.push(`
     CREATE TABLE IF NOT EXISTS heroes1 (
     id SERIAL PRIMARY KEY,
