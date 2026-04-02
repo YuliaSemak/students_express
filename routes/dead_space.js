@@ -1,4 +1,4 @@
- import express from 'express';
+import express from 'express';
 const router = express.Router();
 import db from '../db/connector.js';
 
@@ -33,42 +33,39 @@ router.post('/createGun', async function (req, res, next) {
         )
         VALUES ($1, $2, $3, $4, $5) 
         RETURNING *`;
+
       const res = await db.query(query, [name_of_gun, damage_type, damage_dealth, reload_seconds, additional_info]);
+
 
     } catch (err) {
       console.error(err)
       throw err;
     }
   }
+      if (!name_of_gun) {
+        return res.status(400).send("Назва зброї не може бути пустим рядком");
+      } else if (!damage_type) {
+        return res.status(400).send("Тип шкоди не може бути пустим рядком");
+      } else if (!damage_dealth) {
+        return res.status(400).send("Кількість шкоди не може бути пустим рядком");
+      } else if (damage_dealth < 1) {
+        return res.status(400).send("Кількість шкоди не може бути менше 1");
+      } else if (damage_dealth > 20) {
+        return res.status(400).send("Кількість шкоди не може бути більше 20");
+      } else if (!reload_seconds) {
+        return res.status(400).send("Час перезарядки не може бути пустим рядком");
+      } else if (reload_seconds < 1) {
+        return res.status(400).send("Час перезарядки не може бути менше 1");
+      } else if (reload_seconds > 14) {
+        return res.status(400).send("Час перезарядки не може бути більше 14");
+      }
 
-  if (!name_of_gun) {
-    return res.status(400).send("Назва зброї не може бути пустим рядком");
-  } else if (!damage_type) {
-    return res.status(400).send("Тип шкоди не може бути пустим рядком");
-  } else if (!damage_dealth) {
-    return res.status(400).send("Кількість шкоди не може бути пустим рядком");
-  } else if (damage_dealth = isNaN) {
-    return res.status(400).send("Кількість шкоди мусить бути числом");
-  } else if (damage_dealth < 1) {
-    return res.status(400).send("Кількість шкоди не може бути менше 1");
-  } else if (damage_dealth > 20) {
-    return res.status(400).send("Кількість шкоди не може бути більше 20");
-  } else if (reload_seconds < 1) {
-    return res.status(400).send("Час перезарядки не може бути менше 1");
-  } else if (reload_seconds > 20) {
-    return res.status(400).send("Час перезарядки не може бути більше 20");
-  } else if (!reload_seconds) {
-    return res.status(400).send("Час перезарядки не може бути пустим рядком");
-  } else if (reload_seconds = isNaN) {
-    return res.status(400).send("Час перезарядки мусить бути числом");
-  }
-  
   try {
     await addGun(name_of_gun, damage_type, damage_dealth, reload_seconds, additional_info);
 
     res.redirect('/weapons');
   } catch (err) {
-    res.status(500).send("Помилка при додаванні зброї. Схоже що ви вказали щось неправильно.");
+    res.status(500).send("Помилка при додаванні зброї. Схоже що ви вказали щось неправильно, або взагалі нічого не вказали");
   }
 });
 // -------------------------------------------------------------
@@ -96,9 +93,10 @@ router.get('/edit/:id', async function (req, res, next) {
       mode: 'form',
       pageTitle: 'Edit weapons',
       action: `/weapons/edit/${item.id}`,
-      buttonText: 'Save changes',
+      buttonText: 'save changes',
       item
     });
+
   } catch (err) {
     next(err);
   }
@@ -108,7 +106,7 @@ router.post('/edit/:id', async function (req, res, next) {
   try {
     const { name_of_gun, damage_type, damage_dealth, reload_seconds, additional_info } = req.body;
 
-    
+
     await db.query(
       `
       UPDATE deadSpace
@@ -119,38 +117,36 @@ router.post('/edit/:id', async function (req, res, next) {
           reload_seconds = $4,
           additional_info = $5
       WHERE id = $6
-      `,
-      
+      `
+
       [
-        name_of_gun,
-        damage_type,
-        damage_dealth === '' ? null : damage_dealth,
-        reload_seconds === '' ? null : reload_seconds,
-        additional_info === '' ? null : additional_info,
-        req.params.id
+      name_of_gun,
+      damage_type,
+      damage_dealth,
+      reload_seconds,
+      additional_info,
+      req.params.id
       ]
     );
-  if (!name_of_gun) {
-    return res.status(400).send("Назва зброї не може бути пустим рядком");
-  } else if (!damage_type) {
-    return res.status(400).send("Тип шкоди не може бути пустим рядком");
-  } else if (!damage_dealth) {
-    return res.status(400).send("Кількість шкоди не може бути пустим рядком");
-  } else if (damage_dealth = isNaN) {
-    return res.status(400).send("Кількість шкоди мусить бути числом");
-  } else if (damage_dealth < 1) {
-    return res.status(400).send("Кількість шкоди не може бути менше 1");
-  } else if (damage_dealth > 20) {
-    return res.status(400).send("Кількість шкоди не може бути більше 20");
-  } else if (reload_seconds < 1) {
-    return res.status(400).send("Час перезарядки не може бути менше 1");
-  } else if (reload_seconds > 20) {
-    return res.status(400).send("Час перезарядки не може бути більше 20");
-  } else if (!reload_seconds) {
-    return res.status(400).send("Час перезарядки не може бути пустим рядком");
-  } else if (reload_seconds = isNaN) {
-    return res.status(400).send("Час перезарядки мусить бути числом");
-        }
+
+    if (!name_of_gun) {
+      return res.status(400).send("Назва зброї не може бути пустим рядком");
+    } else if (!damage_type) {
+      return res.status(400).send("Тип шкоди не може бути пустим рядком");
+    } else if (!damage_dealth) {
+      return res.status(400).send("Кількість шкоди не може бути пустим рядком");
+    } else if (damage_dealth < 1) {
+      return res.status(400).send("Кількість шкоди не може бути менше 1");
+    } else if (damage_dealth > 20) {
+      return res.status(400).send("Кількість шкоди не може бути більше 20");
+    } else if (!reload_seconds) {
+      return res.status(400).send("Час перезарядки не може бути пустим рядком");
+    } else if (reload_seconds < 1) {
+      return res.status(400).send("Час перезарядки не може бути менше 1");
+    } else if (reload_seconds > 14) {
+      return res.status(400).send("Час перезарядки не може бути більше 14");
+    }
+
   } catch (err) {
     next(err);
   }
