@@ -57,6 +57,20 @@ createTableQueries.push(`
    );
   `);
 createTableQueries.push(`
+        CREATE TABLE IF NOT EXISTS cars (
+        id SERIAL PRIMARY KEY,
+        car_brand TEXT NOT NULL,
+        car_model TEXT NOT NULL,
+        engine_type TEXT NOT NULL,
+        horsepower TEXT NOT NULL,
+        weight TEXT,
+        acceleration_0_to_100 TEXT,
+        price TEXT, 
+        is_available BOOLEAN DEFAULT TRUE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+        `);
+createTableQueries.push(`
  CREATE TABLE IF NOT EXISTS desperate_housewives_1 (
     id SERIAL PRIMARY KEY,
     username TEXT NOT NULL,
