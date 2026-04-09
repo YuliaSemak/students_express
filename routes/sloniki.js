@@ -39,9 +39,13 @@ router.post('/create', async function(req, res, next) {
       errorPassword: (errorMessage.
         includes("Password") || errorMessage.
         includes("password")) ? errorMessage : null,
-      errorPlaceOfBirth: errorMessage.includes("place") ? errorMessage : null,
-      username, age, place_of_birth
-    })
+
+      formData: {
+        username,
+        age,
+        place_of_birth
+  }
+  })
   }
 })
 
