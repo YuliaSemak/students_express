@@ -20,20 +20,26 @@ async function initTable() {
 initTable();
 
 function checkName(name) {
-  if (!name || name.trim().length < 1) throw new Error('Invalid name: С–РјКјСЏ РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїРѕСЂРѕР¶РЅС–Рј');
-  if (name.length > 50) throw new Error('Invalid name: Р·Р°РЅР°РґС‚Рѕ РґРѕРІРіРµ');
-}
-function checkBreed(breed) {
-  if (!breed || breed.trim().length < 1) throw new Error('Invalid breed: РїРѕСЂРѕРґР° РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїРѕСЂРѕР¶РЅСЊРѕСЋ');
-}
-function checkAge(age) {
-  if (!age || isNaN(age) || Number(age) < 0 || Number(age) > 30)
-    throw new Error('Invalid age: РІС–Рє РјР°С” Р±СѓС‚Рё С‡РёСЃР»РѕРј РІС–Рґ 0 РґРѕ 30');
-}
-function checkShelter(shelter) {
-  if (!shelter || shelter.trim().length < 1) throw new Error('Invalid shelter: РїСЂРёС‚СѓР»РѕРє РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїРѕСЂРѕР¶РЅС–Рј');
+  if (!name || name.trim().length < 1) 
+    throw new Error('Імʼя не може бути порожнім');
+  if (name.length > 50) 
+    throw new Error('Імʼя занадто довге');
 }
 
+function checkBreed(breed) {
+  if (!breed || breed.trim().length < 1) 
+    throw new Error('Порода не може бути порожньою');
+}
+
+function checkAge(age) {
+  if (!age || isNaN(age) || Number(age) < 0 || Number(age) > 30)
+    throw new Error('Вік має бути числом від 0 до 30');
+}
+
+function checkShelter(shelter) {
+  if (!shelter || shelter.trim().length < 1) 
+    throw new Error('Притулок не може бути порожнім');
+}
 router.get('/', async function(req, res, next) {
   const pesyki = await db.query('SELECT * FROM pesyki ORDER BY id ASC');
   const rowPesyki = pesyki.rows.map(p => ({
