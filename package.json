@@ -11,7 +11,7 @@
     "cookie-parser": "~1.4.4",
     "country-list": "^2.4.1",
     "debug": "~2.6.9",
-    "dotenv": "^17.3.1",
+    "dotenv": "^17.4.2",
     "express": "~4.16.1",
     "express-async-errors": "^3.1.1",
     "hbs": "~4.0.4",
