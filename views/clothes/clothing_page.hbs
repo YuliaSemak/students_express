@@ -1,36 +1,40 @@
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h1>👕 Магазин одягу</h1>
-    <a href="/clothing/create" style="background: #16a34a; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold;">➕ Додати товар</a>
+<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px;">
+    <h1>[ Clothes Shop ]</h1>
+    <a href="/clothing/create" class="btn-cyber">ADD NEW ITEM +</a>
 </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Тип</th>
-            <th>Бренд</th>
-            <th>Розмір</th>
-            <th>Ціна</th>
-            <th>На складі</th>
-            <th>Дії</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each items}}
-        <tr>
-            <td><strong>{{this.type}}</strong></td>
-            <td>{{this.brand}}</td>
-            <td>{{this.size}}</td>
-            <td style="color: #16a34a; font-weight: bold;">${{this.price}}</td>
-            <td>{{this.stock_quantity}} шт.</td> <td>
-                <form action="/clothing/delete/{{this.id}}" method="POST" onsubmit="return confirm('Видалити цей товар?')">
-                    <button type="submit" style="color: #dc2626; background: none; border: none; cursor: pointer; text-decoration: underline;">Видалити</button>
-                </form>
-            </td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+<div class="clothing-grid">
+    {{#each items}}
+    <div class="clothing-card">
+        <div class="card-header">
+            <div>
+                <div class="brand-label">{{this.brand}}</div>
+                <div class="item-type">{{this.type}}</div>
+            </div>
+            <div class="price-tag">${{this.price}}</div>
+        </div>
 
-<div style="margin-top: 30px;">
-    <a href="/" style="color: #64748b; text-decoration: none;">🏠 На головну</a>
+        <div class="card-body">
+            <div class="info-row">
+                <span class="info-label">Size:</span>
+                <span class="info-value"><span class="stock-badge">{{this.size}}</span></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Stock:</span>
+                <span class="info-value">{{this.stock_quantity}} pcs</span>
+            </div>
+        </div>
+
+        <div class="card-actions">
+            <a href="/clothing/edit/{{this.id}}" class="btn-action">EDIT</a>
+            <form action="/clothing/delete/{{this.id}}" method="POST" onsubmit="return confirm('Видалити цей товар з бази?')">
+                <button type="submit" class="btn-action btn-delete" style="border: none; cursor: pointer; width: 100%;">DELETE</button>
+            </form>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<div style="margin-top: 50px;">
+    <a href="/" style="color: var(--text-muted); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">← System Dashboard</a>
 </div>
