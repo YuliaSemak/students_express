@@ -3,10 +3,9 @@ const router = express.Router();
 import { getAllClothing, addClothingItem, deleteClothingItem } from '../controllers/clothingController.js';
 import db from '../db/connector.js';
 
-// Налаштування персонального дизайну
 const renderOptions = { layout: 'clothes/layout' };
 
-// 1. СПИСОК ТОВАРІВ
+// це для списку товарів
 router.get('/list', async (req, res) => {
     try {
         const items = await getAllClothing();
@@ -21,7 +20,7 @@ router.get('/list', async (req, res) => {
     }
 });
 
-// 2. ФОРМА СТВОРЕННЯ
+// додавання нового одягу
 router.get('/create', (req, res) => {
     res.render('forms/clothing_form', { 
         ...renderOptions, 
@@ -30,7 +29,7 @@ router.get('/create', (req, res) => {
     });
 });
 
-// 3. ЗБЕРЕЖЕННЯ НОВОГО (POST)
+// як воно буде зберігати
 router.post('/create', async (req, res) => {
     try {
         await addClothingItem(req.body);
@@ -41,7 +40,7 @@ router.post('/create', async (req, res) => {
     }
 });
 
-// 4. ФОРМА РЕДАГУВАННЯ (GET)
+// для редагування
 router.get('/edit/:id', async (req, res) => {
     try {
         const itemId = parseInt(req.params.id);
@@ -63,7 +62,7 @@ router.get('/edit/:id', async (req, res) => {
     }
 });
 
-// 5. ОНОВЛЕННЯ ДАНИХ (POST)
+// щоб оновлювати дані
 router.post('/edit/:id', async (req, res) => {
     try {
         const itemId = req.params.id;
@@ -82,7 +81,7 @@ router.post('/edit/:id', async (req, res) => {
     }
 });
 
-// 6. ВИДАЛЕННЯ (POST)
+// для видалення
 router.post('/delete/:id', async (req, res) => {
     try {
         await deleteClothingItem(req.params.id);
@@ -93,5 +92,4 @@ router.post('/delete/:id', async (req, res) => {
     }
 });
 
-// ЦЕЙ РЯДОК КРИТИЧНО ВАЖЛИВИЙ:
 export default router;
